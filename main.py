@@ -1,16 +1,16 @@
 import random
 import sys
 
-from PyQt5 import uic
+from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtGui import QPen, QPainter, QColor
 from PyQt5.QtWidgets import QApplication, QMainWindow
+from ui_file import Ui_MainWindow
 
 
-class CirclesWidget(QMainWindow):
+class CirclesWidget(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi("UI.ui", self)
-        self.flag, self.color = False, QColor(255, 204, 0)  # Цвет Яндекса!
+        self.flag = False
         self.list_ellipses = [[]]
         self.setWindowTitle("Git и желтые окружности")
         self.loadUI()
@@ -33,7 +33,8 @@ class CirclesWidget(QMainWindow):
             qp = QPainter()
             qp.begin(self)
             for circle in self.list_ellipses[:-1]:
-                pen = QPen(self.color)
+                pen = QPen(QColor(random.randint(0, 255),
+                                  random.randint(0, 255), random.randint(0, 255)))
                 pen.setWidth(circle[-1])
                 qp.setPen(pen)
                 qp.drawEllipse(*circle[:-1], circle[-2])
